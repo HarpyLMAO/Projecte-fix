@@ -8,6 +8,4 @@ package es.cachau.trash.database;
  *
  * @author Alberto
  */
-public class bbdd_ficheros {
-    
-}
+public class bbdd_ficheros {}

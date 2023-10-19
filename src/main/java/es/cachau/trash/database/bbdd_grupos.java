@@ -9,5 +9,5 @@ package es.cachau.trash.database;
  * @author Alberto
  */
 public class bbdd_grupos {
-    //lo mismo que en grupos
+  //lo mismo que en grupos
 }

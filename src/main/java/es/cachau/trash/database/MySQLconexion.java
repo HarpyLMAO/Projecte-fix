@@ -5,7 +5,6 @@
 package es.cachau.trash.database;
 
 import es.cachau.trash.clienteServidor.Cliente;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,30 +18,28 @@ import java.util.logging.Logger;
  */
 public class MySQLconexion {
 
-    static Connection cn;
-    static Statement st;
-    
+  static Connection cn;
+  static Statement st;
 
-    public static void conexionBBDD() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("No trobem el Driver MySQL para JDBC.");
-            return;
-        }
-
-        try {
-            cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bbdd_projectexat", "root", "Alumne2022");
-            st = cn.createStatement();
-        } catch (SQLException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
+  public static void conexionBBDD() {
+    try {
+      Class.forName("com.mysql.cj.jdbc.Driver");
+    } catch (ClassNotFoundException ex) {
+      System.out.println("No trobem el Driver MySQL para JDBC.");
+      return;
     }
-    
-    
-    
-    
-    
-    
+
+    try {
+      cn =
+        DriverManager.getConnection(
+          "jdbc:mysql://localhost:3306/bbdd_projectexat",
+          "root",
+          "Alumne2022"
+        );
+      st = cn.createStatement();
+    } catch (SQLException ex) {
+      Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+      return;
+    }
+  }
 }

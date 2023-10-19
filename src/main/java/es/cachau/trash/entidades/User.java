@@ -9,30 +9,29 @@ package es.cachau.trash.entidades;
  * @author hugo2
  */
 public class User {
-    
-    
-    //tiene que tener los mismos campos con el mismo nombre que la base de datos
-    private String nomUsuari;
-    private String password;
-    
-    public User(String nomUsuari, String password) {
-        this.nomUsuari = nomUsuari;
-        this.password = password;
-    }
 
-    public String getPassword() {
-        return password;
-    }
+  //tiene que tener los mismos campos con el mismo nombre que la base de datos
+  private String nomUsuari;
+  private String password;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public User(String nomUsuari, String password) {
+    this.nomUsuari = nomUsuari;
+    this.password = password;
+  }
 
-    public String getNomUsuari() {
-        return nomUsuari;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setNomUsuari(String nomUsuari) {
-        this.nomUsuari = nomUsuari;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getNomUsuari() {
+    return nomUsuari;
+  }
+
+  public void setNomUsuari(String nomUsuari) {
+    this.nomUsuari = nomUsuari;
+  }
 }
