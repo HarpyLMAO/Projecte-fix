@@ -4,7 +4,6 @@ import es.cachau.Client;
 import es.cachau.Servidor;
 import es.cachau.managers.entities.Group;
 import es.cachau.managers.entities.User;
-
 import java.io.*;
 import java.net.Socket;
 import java.sql.ResultSet;

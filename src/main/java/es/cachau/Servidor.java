@@ -5,7 +5,6 @@ import static es.cachau.Client.scanner;
 import es.cachau.managers.ChatManager;
 import es.cachau.managers.database.Database;
 import es.cachau.managers.entities.User;
-
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
