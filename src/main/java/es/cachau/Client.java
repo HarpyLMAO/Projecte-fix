@@ -1,10 +1,9 @@
 package es.cachau;
 
 import es.cachau.managers.entities.User;
-import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -16,45 +15,55 @@ public class Client {
   public static Logger logger = Logger.getLogger("[CHAT]");
 
   public static Socket socket;
-  public static BufferedReader in;
+  public static DataInputStream in;
+  public static DataOutputStream out;
 
   public static final User currentUser = null;
 
   public static void main(String[] args) throws IOException, SQLException {
     logger.info("Iniciant client");
 
-    socket = new Socket("127.0.0.1", 8100);
-    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+    socket = new Socket("localhost", 8100);
+    in = new DataInputStream(socket.getInputStream());
+    out = new DataOutputStream(socket.getOutputStream());
 
     // Iniciar un nuevo hilo para leer la entrada del usuario
     new Thread(() -> {
-      BufferedReader reader = new BufferedReader(
-        new InputStreamReader(System.in)
-      );
-      String lineaConsola;
       try {
-        while ((lineaConsola = reader.readLine()) != null) {
-          out.println(lineaConsola);
+        while (true) {
+          String lineaConsola = scanner.nextLine();
+          out.writeUTF(lineaConsola);
+          out.flush();
         }
       } catch (IOException e) {
         e.printStackTrace();
       }
-    })
-      .start();
-    // Leer los mensajes del servidor en el hilo principal
-    String mensajeServidor;
-    while ((mensajeServidor = in.readLine()) != null) {
-      System.out.println(mensajeServidor);
-    }
+    }).start();
 
-    String solicitudServidor;
-    while ((solicitudServidor = in.readLine()) != null) {
-      System.out.println(solicitudServidor);
-      String respuestaUsuario = scanner.nextLine();
-      out.println(respuestaUsuario);
-    }
+    new Thread(() -> {
+      try {
+        while (true) {
+          String mensajeServidor = in.readUTF();
+          System.out.println(mensajeServidor);
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }).start();
+
+    new Thread(() -> {
+      try {
+        while (true) {
+          String solicitudServidor = in.readUTF();
+          System.out.println(solicitudServidor);
+          String respuestaUsuario = scanner.nextLine();
+          out.writeUTF(respuestaUsuario);
+          out.flush();
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }).start();
   }
 
   public static void setCurrentUser(User user) {
@@ -73,7 +82,7 @@ public class Client {
     return socket;
   }
 
-  public static BufferedReader getIn() {
+  public static DataInputStream getIn() {
     return in;
   }
 }

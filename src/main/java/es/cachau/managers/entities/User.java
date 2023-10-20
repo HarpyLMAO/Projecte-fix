@@ -1,6 +1,8 @@
 package es.cachau.managers.entities;
 
 import es.cachau.Servidor;
+
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +11,8 @@ public class User {
 
   public static List<User> users = new ArrayList<>();
 
-  public String name;
-  public String alias;
+  public static String name;
+  public static String alias;
   public String password;
 
   public User(String name, String alias, String password) throws SQLException {
@@ -18,11 +20,26 @@ public class User {
     this.alias = alias;
     this.password = password;
 
-    this.create(name, alias, this.password);
     users.add(this);
   }
 
-  private void create(String name, String alias, String password)
+  public static void loadUsers() {
+    String query = "SELECT * FROM usuaris;";
+    try {
+      ResultSet resultSet = Servidor.database.statement.executeQuery(query);
+      while (resultSet.next()) {
+        String name = resultSet.getString("nom_usuari");
+        String alias = resultSet.getString("alias_usuari");
+        String password = resultSet.getString("password_usuari");
+
+        new User(name, alias, password);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void create(String name, String alias, String password)
     throws SQLException {
     String query =
       "INSERT INTO usuaris SET nom_usuari = '" +

@@ -19,9 +19,9 @@ public class Database {
     try {
       connection =
         DriverManager.getConnection(
-          "jdbc:mysql://localhost:3306/bbdd_projectexat",
+          "jdbc:mysql://localhost:3307/bbdd_projectexat",
           "root",
-          ""
+          "1234"
         );
       statement = connection.createStatement();
     } catch (java.sql.SQLException e) {
